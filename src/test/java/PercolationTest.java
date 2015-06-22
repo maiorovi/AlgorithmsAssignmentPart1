@@ -29,8 +29,8 @@ public class PercolationTest {
     @Test
     public void anyTopRowCellIsFullWhenItIsOpened() {
         for(int i = 2; i < size; i++) {
-            percolation.open(0, i);
-            assertThat(percolation.isFull(0, i), is(true));
+            percolation.open(1, i);
+            assertThat(percolation.isFull(1, i), is(true));
         }
 
 
@@ -38,9 +38,9 @@ public class PercolationTest {
 
     @Test
     public void percolatesWhenTopAnyTopCellConnectedToAnyBottomCell() {
-        percolation.open(0,0);
-        percolation.open(1,0);
-        percolation.open(2,0);
+        percolation.open(1,1);
+        percolation.open(2,1);
+        percolation.open(3,1);
 
         assertThat(percolation.percolates(), is(true));
     }
@@ -49,12 +49,12 @@ public class PercolationTest {
     public void percolatestWhenAConnectionExists() {
         Percolation percolation = new Percolation(5);
 
-        percolation.open(0,3);
-        percolation.open(1,3);
-        percolation.open(2,3);
-        percolation.open(3,3);
+        percolation.open(1,4);
+        percolation.open(2,4);
         percolation.open(3,4);
         percolation.open(4,4);
+        percolation.open(4,5);
+        percolation.open(5,5);
 
         assertThat(percolation.percolates(), is(true));
     }
@@ -63,11 +63,11 @@ public class PercolationTest {
     public void notPercolateWhenThereIsNoConnectionBetweenTopAndBot() {
         Percolation percolation = new Percolation(5);
 
-        percolation.open(0,3);
-        percolation.open(1,3);
-        percolation.open(2,3);
-        percolation.open(3,3);
+        percolation.open(1,4);
+        percolation.open(2,4);
         percolation.open(3,4);
+        percolation.open(4,4);
+        percolation.open(4,5);
 
         assertThat(percolation.percolates(), is(false));
     }
@@ -75,6 +75,21 @@ public class PercolationTest {
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionWhenArgumentIs() {
         Percolation percolation = new Percolation(-5);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void throwIndexOutOfBoundsExceptionWhenOpenArgumentIsOutOfBounds() {
+        percolation.open(-1,-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void throwIndexOutOfBoundsExceptionWhenIsOpenArgumentIsOutOfBounds() {
+        percolation.isOpen(-1, -1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void throwIndexOutOfBoundsExceptionWhenIsFullArgumentIsOutOfBounds() {
+        percolation.isFull(-1,-1);
     }
 
 }
