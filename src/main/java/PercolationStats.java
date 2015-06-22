@@ -5,6 +5,9 @@ public class PercolationStats {
     private double[] tempResult;
 
     public PercolationStats(int N, int T) {
+        if (T <= 0 || N <= 0)
+            throw new IllegalArgumentException();
+
         this.times = T;
         this.size = N;
         tempResult = new double[T];

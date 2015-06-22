@@ -8,7 +8,7 @@ public class Percolation {
     private int size;
 
     public Percolation(int N) {
-        if (N < 0)
+        if (N <= 0)
             throw new IllegalArgumentException();
 
         this.quickUnion = new WeightedQuickUnionUF(N * N + 2);

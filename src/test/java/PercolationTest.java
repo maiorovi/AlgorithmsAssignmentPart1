@@ -89,7 +89,12 @@ public class PercolationTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void throwIndexOutOfBoundsExceptionWhenIsFullArgumentIsOutOfBounds() {
-        percolation.isFull(-1,-1);
+        percolation.isFull(-1, -1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwIllegalArgumentExceptionWhenZeroIsGivenToConstructor() {
+        Percolation percolation = new Percolation(0);
     }
 
 }
