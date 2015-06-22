@@ -52,8 +52,13 @@ public class PercolationStats {
         return mean() + (1.96 * stddev() / Math.sqrt(times));
     }             // high endpoint of 95% confidence interval
 
-    public static void main(String[] args) {
-        PercolationStats stats = new PercolationStats(200, 100);
+    public static void main(String[] args) throws Exception {
+        if (args.length < 2) {
+            throw new Exception();
+        }
+        int times = Integer.parseInt(args[0]);
+        int size = Integer.parseInt(args[1]);
+        PercolationStats stats = new PercolationStats(times, size);
         System.out.println(stats.mean());
         System.out.println(stats.stddev());
         System.out.println(stats.confidenceLo());
