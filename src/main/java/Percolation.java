@@ -8,6 +8,9 @@ public class Percolation {
     private int size;
 
     public Percolation(int N) {
+        if (N < 0)
+            throw new IllegalArgumentException();
+
         this.quickUnion = new WeightedQuickUnionUF(N * N + 2);
         this.size = N;
         isOpened = new boolean[N * N + 2];
@@ -19,7 +22,6 @@ public class Percolation {
         for (int i = getIndexFromMatrixCoords(N, 0) - size; i < getIndexFromMatrixCoords(N, 0); i++) {
             quickUnion.union(VIRTUAL_BOTTOM_INDEX, i);
         }
-
     }
 
     public void open(int i, int j) {
@@ -129,4 +131,8 @@ public class Percolation {
     private int getIndexFromMatrixCoords(int i, int j) {
         return size * i + j + 2;
     }
+
+//    private int validateIndexes() {
+//
+//    }
 }

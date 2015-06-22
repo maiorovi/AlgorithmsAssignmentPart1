@@ -71,4 +71,10 @@ public class PercolationTest {
 
         assertThat(percolation.percolates(), is(false));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwIllegalArgumentExceptionWhenArgumentIs() {
+        Percolation percolation = new Percolation(-5);
+    }
+
 }
