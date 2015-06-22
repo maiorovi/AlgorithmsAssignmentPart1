@@ -32,8 +32,6 @@ public class PercolationTest {
             percolation.open(1, i);
             assertThat(percolation.isFull(1, i), is(true));
         }
-
-
     }
 
     @Test
@@ -95,6 +93,42 @@ public class PercolationTest {
     @Test(expected = IllegalArgumentException.class)
     public void throwIllegalArgumentExceptionWhenZeroIsGivenToConstructor() {
         Percolation percolation = new Percolation(0);
+    }
+
+    @Test
+    public void whenSizeIsOneAndCellIsOpenThenPercolatesReturnsFalse() {
+        Percolation percolation = new Percolation(1);
+        percolation.open(1,1);
+
+        assertThat(percolation.percolates(), is(false));
+    }
+
+    @Test
+    public void whenSizeIsOneAndCellIsBlockedThenPercolationReturnsFalse() {
+        Percolation percolation = new Percolation(1);
+
+        assertThat(percolation.percolates(), is(false));
+    }
+
+    @Test
+    public void whenCellIsNotConnectedToTopThenItShouldBeEmpty() {
+        percolation.open(2,2);
+
+        assertThat(percolation.isFull(2,2), is(false));
+    }
+
+    @Test
+    public void test1() {
+        Percolation percolation = new Percolation(4);
+        percolation.open(4,1);
+        percolation.open(3,1);
+        percolation.open(2,1);
+        percolation.open(1,1);
+        percolation.open(1,4);
+        percolation.open(2,4);
+        percolation.open(4,4);
+
+        assertThat(percolation.isFull(4,4), is(false));
     }
 
 }

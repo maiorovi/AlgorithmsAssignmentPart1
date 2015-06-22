@@ -19,13 +19,18 @@ public class Percolation {
             quickUnion.union(VIRTUAL_TOP_INDEX, i);
         }
 
-        for (int i = getIndexFromMatrixCoords(N+1, 1) - size; i < getIndexFromMatrixCoords(N+1, 1); i++) {
+        for (int i = getIndexFromMatrixCoords(N + 1, 1) - size; i < getIndexFromMatrixCoords(N + 1, 1); i++) {
             quickUnion.union(VIRTUAL_BOTTOM_INDEX, i);
         }
     }
 
     public void open(int i, int j) {
         validateIndexes(i, j);
+
+        if (size == 1) {
+            isOpened[0] = true;
+            return;
+        }
 
         int index = getIndexFromMatrixCoords(i, j);
 
@@ -129,6 +134,10 @@ public class Percolation {
     }
 
     public boolean percolates() {
+        if (size == 1) {
+            return false;
+        }
+
         return quickUnion.connected(VIRTUAL_TOP_INDEX, VIRTUAL_BOTTOM_INDEX);
     }
 
