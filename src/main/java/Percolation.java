@@ -36,17 +36,17 @@ public class Percolation {
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
             if (isOpen(i, j - 1))
-                quickUnion.union(index, index_bottom);
-            if (isOpen(i + 1, j))
                 quickUnion.union(index, index_left);
+            if (isOpen(i + 1, j))
+                quickUnion.union(index, index_bottom);
         } else if (i == 0) {
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
             if (isOpen(i,j - 1))
-                quickUnion.union(index, index_bottom);
-            if (isOpen(i+1, j))
                 quickUnion.union(index, index_left);
+            if (isOpen(i+1, j))
+                quickUnion.union(index, index_bottom);
             if (isOpen(i, j + 1))
                 quickUnion.union(index, index_right);
         } else if (i == size - 1 && j == 0) {
@@ -82,7 +82,7 @@ public class Percolation {
             if (isOpen(i+1, j))
                 quickUnion.union(index, index_bottom);
             if (isOpen(i, j + 1))
-            quickUnion.union(index, index_right);
+                quickUnion.union(index, index_right);
         } else if (i > 0 && j == size - 1) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_left = getIndexFromMatrixCoords(i, j - 1);
@@ -101,9 +101,9 @@ public class Percolation {
             if (isOpen(i - 1, j))
                 quickUnion.union(index, index_top);
             if (isOpen(i, j - 1))
-                quickUnion.union(index, index_bottom);
-            if (isOpen(i+1, j))
                 quickUnion.union(index, index_left);
+            if (isOpen(i+1, j))
+                quickUnion.union(index, index_bottom);
             if (isOpen(i, j + 1))
                 quickUnion.union(index, index_right);
         }

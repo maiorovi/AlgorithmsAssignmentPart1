@@ -7,7 +7,7 @@ public class PercolationStats {
     public PercolationStats(int N, int T) {
         this.times = T;
         this.size = N;
-        tempResult = new double[N];
+        tempResult = new double[T];
 
         for (int i = 0; i < T; i++) {
             Percolation percolation = new Percolation(size);
@@ -27,21 +27,21 @@ public class PercolationStats {
 
     public double mean() {
         double summary = 0;
-        for(int i = 0; i < size; i++ ) {
+        for(int i = 0; i < times; i++ ) {
                 summary += tempResult[i];
         }
 
-        return summary / size;
+        return summary / times;
     }                     // sample mean of percolation threshold
 
     public double stddev() {
         double summary = 0;
 
-        for(int i = 0; i < size; i++) {
+        for(int i = 0; i < times; i++) {
             summary += Math.pow(tempResult[i] - mean(), 2);
         }
 
-        return Math.sqrt(summary / (size - 1));
+        return Math.sqrt(summary / (times - 1));
     }                    // sample standard deviation of percolation threshold
 
     public double confidenceLo() {
