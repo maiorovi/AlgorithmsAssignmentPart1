@@ -5,6 +5,7 @@ public class Percolation {
 
     private boolean isOpened[];
     private WeightedQuickUnionUF quickUnion;
+    private WeightedQuickUnionUF noBackWash;
     private int size;
 
     public Percolation(int N) {
@@ -12,11 +13,13 @@ public class Percolation {
             throw new IllegalArgumentException();
 
         this.quickUnion = new WeightedQuickUnionUF(N * N + 2);
+        this.noBackWash = new WeightedQuickUnionUF(N * N + 2);
         this.size = N;
         isOpened = new boolean[N * N + 2];
 
         for (int i = 2; i < N + 2; i++) {
             quickUnion.union(VIRTUAL_TOP_INDEX, i);
+            noBackWash.union(VIRTUAL_TOP_INDEX, i);
         }
 
         for (int i = getIndexFromMatrixCoords(N + 1, 1) - size; i < getIndexFromMatrixCoords(N + 1, 1); i++) {
@@ -31,6 +34,7 @@ public class Percolation {
             int index = getIndexFromMatrixCoords(i, j);
             isOpened[index] = true;
             quickUnion.union(index,index);
+            noBackWash.union(index, index);
             return;
         }
 
@@ -39,84 +43,132 @@ public class Percolation {
         if (i == 1 && j == 1) {
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
-            if (isOpen(i + 1, j))
+            if (isOpen(i + 1, j)) {
                 quickUnion.union(index, index_bottom);
-            if (isOpen(i, j + 1))
+                noBackWash.union(index, index_bottom);
+            }
+            if (isOpen(i, j + 1)) {
                 quickUnion.union(index, index_right);
+                noBackWash.union(index, index_right);
+            }
         } else if (i == 1 && j == size) {
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
-            if (isOpen(i, j - 1))
+            if (isOpen(i, j - 1)) {
                 quickUnion.union(index, index_left);
-            if (isOpen(i + 1, j))
+                noBackWash.union(index, index_left);
+            }
+            if (isOpen(i + 1, j)) {
                 quickUnion.union(index, index_bottom);
+                noBackWash.union(index, index_bottom);
+            }
         } else if (i == 1) {
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
-            if (isOpen(i,j - 1))
+            if (isOpen(i,j - 1)) {
                 quickUnion.union(index, index_left);
-            if (isOpen(i+1, j))
+                noBackWash.union(index, index_left);
+            }
+            if (isOpen(i+1, j)) {
                 quickUnion.union(index, index_bottom);
-            if (isOpen(i, j + 1))
+                noBackWash.union(index, index_bottom);
+            }
+            if (isOpen(i, j + 1)) {
                 quickUnion.union(index, index_right);
+                noBackWash.union(index, index_right);
+            }
         } else if (i == size && j == 1) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
-            if (isOpen(i - 1, j))
+            if (isOpen(i - 1, j)) {
                 quickUnion.union(index, index_top);
-            if (isOpen(i, j + 1))
+                noBackWash.union(index, index_top);
+            }
+            if (isOpen(i, j + 1)) {
                 quickUnion.union(index, index_right);
+                noBackWash.union(index, index_right);
+            }
         } else if (i == size && j == size) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_left = getIndexFromMatrixCoords(i, j - 1);
-            if (isOpen(i-1,j))
+            if (isOpen(i-1,j)) {
                 quickUnion.union(index, index_top);
-            if (isOpen(i, j - 1))
+                noBackWash.union(index, index_top);
+            }
+            if (isOpen(i, j - 1)) {
                 quickUnion.union(index, index_left);
+                noBackWash.union(index, index_left);
+            }
         } else if (i == size) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
-            if (isOpen(i - 1, j))
+            if (isOpen(i - 1, j)) {
                 quickUnion.union(index, index_top);
-            if (isOpen(i, j - 1))
+                noBackWash.union(index, index_top);
+            }
+            if (isOpen(i, j - 1)) {
                 quickUnion.union(index, index_left);
-            if (isOpen(i, j + 1))
+                noBackWash.union(index, index_left);
+            }
+            if (isOpen(i, j + 1)) {
                 quickUnion.union(index, index_right);
+                noBackWash.union(index, index_right);
+            }
         } else if (j == 1 && i > 1) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
-            if (isOpen(i - 1, j))
+            if (isOpen(i - 1, j)) {
                 quickUnion.union(index, index_top);
-            if (isOpen(i+1, j))
+                noBackWash.union(index, index_top);
+            }
+            if (isOpen(i+1, j)) {
                 quickUnion.union(index, index_bottom);
-            if (isOpen(i, j + 1))
+                noBackWash.union(index, index_bottom);
+            }
+            if (isOpen(i, j + 1)) {
                 quickUnion.union(index, index_right);
+                noBackWash.union(index, index_right);
+            }
         } else if (i > 1 && j == size) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
-            if (isOpen(i - 1, j))
+            if (isOpen(i - 1, j)) {
                 quickUnion.union(index, index_top);
-            if (isOpen(i, j - 1))
+                noBackWash.union(index, index_top);
+            }
+            if (isOpen(i, j - 1)) {
                 quickUnion.union(index, index_left);
-            if (isOpen(i + 1, j))
+                noBackWash.union(index, index_left);
+            }
+            if (isOpen(i + 1, j)) {
                 quickUnion.union(index, index_bottom);
+                noBackWash.union(index, index_bottom);
+            }
         } else if (i > 1 && j > 1) {
             int index_top = getIndexFromMatrixCoords(i - 1, j);
             int index_left = getIndexFromMatrixCoords(i, j - 1);
             int index_bottom = getIndexFromMatrixCoords(i + 1, j);
             int index_right = getIndexFromMatrixCoords(i, j + 1);
-            if (isOpen(i - 1, j))
+            if (isOpen(i - 1, j)) {
                 quickUnion.union(index, index_top);
-            if (isOpen(i, j - 1))
+                noBackWash.union(index, index_top);
+            }
+            if (isOpen(i, j - 1)) {
                 quickUnion.union(index, index_left);
-            if (isOpen(i+1, j))
+                noBackWash.union(index, index_left);
+            }
+            if (isOpen(i+1, j)) {
                 quickUnion.union(index, index_bottom);
-            if (isOpen(i, j + 1))
+                noBackWash.union(index, index_bottom);
+            }
+            if (isOpen(i, j + 1)) {
                 quickUnion.union(index, index_right);
+                noBackWash.union(index, index_right);
+            }
         }
 
         isOpened[index] = true;
@@ -132,7 +184,7 @@ public class Percolation {
     public boolean isFull(int i, int j) {
         validateIndexes(i, j);
         int index = getIndexFromMatrixCoords(i, j);
-        return isOpen(i, j) && quickUnion.connected(VIRTUAL_TOP_INDEX, index);
+        return isOpen(i, j) && noBackWash.connected(VIRTUAL_TOP_INDEX, index);
     }
 
     public boolean percolates() {
