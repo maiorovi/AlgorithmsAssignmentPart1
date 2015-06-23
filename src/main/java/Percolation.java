@@ -188,9 +188,10 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        if (size == 1) {
+        if (size == 1 && !isOpen(1,1)) {
             return false;
         }
+
 
         return quickUnion.connected(VIRTUAL_TOP_INDEX, VIRTUAL_BOTTOM_INDEX);
     }

@@ -96,11 +96,11 @@ public class PercolationTest {
     }
 
     @Test
-    public void whenSizeIsOneAndCellIsOpenThenPercolatesReturnsFalse() {
+    public void whenSizeIsOneAndCellIsOpenThenPercolatesReturnsTrue() {
         Percolation percolation = new Percolation(1);
         percolation.open(1,1);
 
-        assertThat(percolation.percolates(), is(false));
+        assertThat(percolation.percolates(), is(true));
     }
 
     @Test
