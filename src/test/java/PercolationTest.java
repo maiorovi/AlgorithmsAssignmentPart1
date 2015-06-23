@@ -119,16 +119,10 @@ public class PercolationTest {
 
     @Test
     public void test1() {
-        Percolation percolation = new Percolation(4);
-        percolation.open(4,1);
-        percolation.open(3,1);
-        percolation.open(2,1);
-        percolation.open(1,1);
-        percolation.open(1,4);
-        percolation.open(2,4);
-        percolation.open(4,4);
+        Percolation percolation = new Percolation(1);
+        percolation.open(1, 1);
 
-        assertThat(percolation.isFull(4,4), is(false));
+        assertThat(percolation.isFull(1,1), is(true));
     }
 
 }

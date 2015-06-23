@@ -28,7 +28,9 @@ public class Percolation {
         validateIndexes(i, j);
 
         if (size == 1) {
-            isOpened[0] = true;
+            int index = getIndexFromMatrixCoords(i, j);
+            isOpened[index] = true;
+            quickUnion.union(index,index);
             return;
         }
 
