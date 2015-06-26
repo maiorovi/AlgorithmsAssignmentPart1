@@ -42,10 +42,10 @@ public class RandomizedQueueTest {
 
     @Test
     public void sizeReturnsThreeWhenThereIsThreeObjectsInQueue() {
-        RandomizedQueue queue = new RandomizedQueue();
-        Object item = new Object();
-        Object item2 = new Object();
-        Object item3 = new Object();
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+        Integer item = new Integer(1);
+        Integer item2 = new Integer(2);
+        Integer item3 = new Integer(3);
 
         queue.enqueue(item);
         queue.enqueue(item2);
