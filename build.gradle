@@ -12,5 +12,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'org.assertj:assertj-core:2.0.0'
-
+    compile 'org.mockito:mockito-all:1.10.19'
+    compile 'org.powermock:powermock-api-mockito:1.6.2'
+    compile 'org.powermock:powermock-module-junit4:1.6.2'
 }

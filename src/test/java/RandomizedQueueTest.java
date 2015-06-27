@@ -1,8 +1,16 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(StdRandom.class)
 public class RandomizedQueueTest {
 
     private RandomizedQueue queue;
@@ -13,7 +21,7 @@ public class RandomizedQueueTest {
     }
 
     @Test
-    public void  returnsTrueWhenQueueIsEmpty() {
+    public void returnsTrueWhenQueueIsEmpty() {
         assertThat(queue.isEmpty()).isTrue();
     }
 
@@ -52,5 +60,73 @@ public class RandomizedQueueTest {
         queue.enqueue(item3);
 
         assertThat(queue.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void doubleTheSizeOfQueueWhenQueueIsFull() {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+        for (int i = 0; i < 5; i++) {
+            queue.enqueue(i);
+        }
+
+        assertThat(queue.size()).isEqualTo(5);
+
+    }
+
+    @Test
+    public void returnsElementFromOnElementQueue() {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+
+        queue.enqueue(1);
+
+        assertThat(queue.sample()).isEqualTo(1);
+        assertThat(queue.sample()).isEqualTo(1);
+    }
+
+
+    @Test
+    public void returnsRandomElementFromQueue() {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+        mockStatic(StdRandom.class);
+
+        for (int i = 0; i < 3; i++) {
+            queue.enqueue(i);
+        }
+
+        when(StdRandom.uniform(any(Integer.class))).thenReturn(2);
+
+        assertThat(queue.sample()).isEqualTo(2);
+        assertThat(queue.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void returnAndRemoveRandomElementFromQueue() {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+        mockStatic(StdRandom.class);
+
+        for (int i = 0; i < 5; i++) {
+            queue.enqueue(i);
+        }
+
+        when(StdRandom.uniform(any(Integer.class))).thenReturn(2);
+
+        assertThat(queue.size()).isEqualTo(5);
+        assertThat(queue.dequeue()).isEqualTo(2);
+        assertThat(queue.size()).isEqualTo(4);
+    }
+
+    @Test
+    public void decreaseQueueSizeWhenElementsAmountIsLow() {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<Integer>();
+
+        for(int i = 0; i < 20; i++) {
+            queue.enqueue(i);
+        }
+
+        for(int i=0; i < 16; i++) {
+            queue.dequeue();
+        }
+
+        assertThat(queue.size()).isEqualTo(4);
     }
 }
