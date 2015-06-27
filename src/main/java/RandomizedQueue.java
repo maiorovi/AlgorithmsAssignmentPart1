@@ -1,4 +1,7 @@
-public class RandomizedQueue<Item> {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Item obj[];
     private int pointer = 0;
@@ -16,12 +19,20 @@ public class RandomizedQueue<Item> {
     }
 
     public void enqueue(Item item) {
+        if (item == null)
+            throw new NullPointerException();
+
         if (pointer == obj.length - 1)
             changeQueueSize(obj.length * 2);
+
         obj[pointer++] = item;
     }
 
     public Item sample() {
+        if (pointer == 0) {
+            throw new NoSuchElementException();
+        }
+
         int indexToReturn = StdRandom.uniform(pointer);
         return obj[indexToReturn];
     }
@@ -37,13 +48,15 @@ public class RandomizedQueue<Item> {
     }
 
     public Item dequeue() {
+        if (pointer == 0) {
+            throw new NoSuchElementException();
+        }
         if (pointer == obj.length / 4) {
             changeQueueSize(obj.length / 2);
         }
 
         int indexToReturn = StdRandom.uniform(pointer);
-        pointer--;
-        exch(obj, indexToReturn, pointer);
+        exch(obj, indexToReturn, --pointer);
 
         return obj[pointer];
     }
@@ -52,5 +65,42 @@ public class RandomizedQueue<Item> {
         Item temp = container[i];
         container[i] = container[j];
         container[j] = temp;
+    }
+
+    public Iterator<Item> iterator() {
+        return new RandomizedQueueIterator();
+    }
+
+    private class RandomizedQueueIterator implements Iterator<Item> {
+
+        private int itPointer;
+        private Item[] container;
+
+        private RandomizedQueueIterator() {
+            this.container = (Item[]) new Object[obj.length];
+            System.arraycopy(obj,0,container,0,obj.length);
+            this.itPointer = pointer;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return itPointer > 0;
+        }
+
+        @Override
+        public Item next() {
+            if (itPointer == 0)
+                throw new NoSuchElementException();
+
+            int indextToReturn = StdRandom.uniform(itPointer);
+            exch(container, indextToReturn, --itPointer);
+
+            return container[itPointer];
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }
