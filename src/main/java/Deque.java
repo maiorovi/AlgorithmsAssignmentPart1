@@ -82,7 +82,8 @@ public class Deque<T> implements Iterable<T> {
 
         private DequeIterator() {
             itDequeSize = dequeSize;
-            current = new Node(first.next, first.previous, first.value);
+            if (first != null)
+                current = new Node(first.next, first.previous, first.value);
         }
 
         @Override
@@ -92,8 +93,11 @@ public class Deque<T> implements Iterable<T> {
 
         @Override
         public T next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
             T valueToReturn = current.value;
             current = current.next;
+            itDequeSize--;
 
             return valueToReturn;
         }

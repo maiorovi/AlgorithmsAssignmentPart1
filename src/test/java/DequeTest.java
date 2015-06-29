@@ -187,6 +187,17 @@ public class DequeTest {
         addManyToTailDeque(10);
         int counter = 0;
         Iterator<Integer> it = deque.iterator();
+
+        assertThat(it.next()).isEqualTo(0);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void throwExceptionWhenIteratorReturnedLastElement() {
+        deque.addFirst(5);
+        Iterator<Integer> it = deque.iterator();
+        it.next();
+        it.next();
+
     }
 
 
