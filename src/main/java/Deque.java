@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Deque<T> implements Iterable<T> {
+public class Deque<Item> implements Iterable<Item> {
 
     private Node first;
     private Node last;
@@ -11,7 +11,7 @@ public class Deque<T> implements Iterable<T> {
         return dequeSize == 0;
     }
 
-    public void addFirst(T item) {
+    public void addFirst(Item item) {
         throwExceptioWhenNull(item);
         dequeSize++;
         if (first == null && last == null) {
@@ -29,7 +29,7 @@ public class Deque<T> implements Iterable<T> {
         return dequeSize;
     }
 
-    public T removeFirst() {
+    public Item removeFirst() {
         throwExceptionWhenEmpty();
         Node temp = first;
         first = first.next;
@@ -37,7 +37,7 @@ public class Deque<T> implements Iterable<T> {
         return temp.value;
     }
 
-    public void addLast(T item) {
+    public void addLast(Item item) {
         throwExceptioWhenNull(item);
         if (last == null && first == null) {
             last = new Node(null, last, item);
@@ -49,7 +49,7 @@ public class Deque<T> implements Iterable<T> {
         dequeSize++;
     }
 
-    public T removeLast() {
+    public Item removeLast() {
         throwExceptionWhenEmpty();
         Node oldLast = last;
         last = oldLast.previous;
@@ -64,18 +64,18 @@ public class Deque<T> implements Iterable<T> {
         }
     }
 
-    private void throwExceptioWhenNull(T item) {
+    private void throwExceptioWhenNull(Item item) {
         if (item == null) {
             throw new NullPointerException();
         }
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<Item> iterator() {
         return new DequeIterator();
     }
 
-    private class DequeIterator implements Iterator<T> {
+    private class DequeIterator implements Iterator<Item> {
 
         private int itDequeSize;
         private Node current;
@@ -92,10 +92,10 @@ public class Deque<T> implements Iterable<T> {
         }
 
         @Override
-        public T next() {
+        public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
-            T valueToReturn = current.value;
+            Item valueToReturn = current.value;
             current = current.next;
             itDequeSize--;
 
@@ -111,9 +111,9 @@ public class Deque<T> implements Iterable<T> {
     private class Node {
         private Node next;
         private Node previous;
-        private T value;
+        private Item value;
 
-        public Node(Node next, Node prev, T value) {
+        public Node(Node next, Node prev, Item value) {
             this.next = next;
             this.previous = prev;
             this.value = value;
