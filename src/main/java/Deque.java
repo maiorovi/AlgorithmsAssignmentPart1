@@ -1,6 +1,7 @@
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Deque<T> {
+public class Deque<T> implements Iterable<T> {
 
     private Node first;
     private Node last;
@@ -66,6 +67,40 @@ public class Deque<T> {
     private void throwExceptioWhenNull(T item) {
         if (item == null) {
             throw new NullPointerException();
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new DequeIterator();
+    }
+
+    private class DequeIterator implements Iterator<T> {
+
+        private int itDequeSize;
+        private Node current;
+
+        private DequeIterator() {
+            itDequeSize = dequeSize;
+            current = new Node(first.next, first.previous, first.value);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return itDequeSize > 0;
+        }
+
+        @Override
+        public T next() {
+            T valueToReturn = current.value;
+            current = current.next;
+
+            return valueToReturn;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 
