@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class Deque<T> {
 
     private Node first;
@@ -27,6 +29,7 @@ public class Deque<T> {
     }
 
     public T removeFirst() {
+        throwExceptionWhenEmpty();
         Node temp = first;
         first = first.next;
         dequeSize--;
@@ -35,17 +38,29 @@ public class Deque<T> {
 
     public void addLast(T item) {
         throwExceptioWhenNull(item);
-        Node temp = last;
-        last = new Node(null, last, item);
+        if (last == null && first == null) {
+            last = new Node(null, last, item);
+            first = last;
+        }
+        Node oldLast = last;
+        last = new Node(null, oldLast, item);
+        oldLast.next = last;
         dequeSize++;
     }
 
     public T removeLast() {
+        throwExceptionWhenEmpty();
         Node oldLast = last;
         last = oldLast.previous;
         dequeSize--;
 
         return oldLast.value;
+    }
+
+    private void throwExceptionWhenEmpty() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
     }
 
     private void throwExceptioWhenNull(T item) {

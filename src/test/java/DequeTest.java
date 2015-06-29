@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DequeTest {
@@ -61,8 +63,7 @@ public class DequeTest {
     @Test
     public void increaseDequeSizeWhenAddingToTheEndOfTheDeque() {
         addManyToHeadOfDeque(10);
-        deque.addLast(10);
-        deque.addLast(10);
+        addManyToTailDeque(2);
 
         assertThat(deque.size()).isEqualTo(12);
     }
@@ -91,6 +92,57 @@ public class DequeTest {
         assertThat(deque.removeLast()).isEqualTo(0);
     }
 
+    @Test
+    public void addLastThenReturnFirst() {
+        addManyToTailDeque(10);
+
+        assertThat(deque.removeFirst()).isEqualTo(0);
+    }
+
+    @Test
+    public void addLastAddFirstTwiceThenCheckFirst() {
+        deque.addLast(3);
+        deque.addFirst(1);
+        deque.addFirst(2);
+
+        assertThat(deque.removeFirst()).isEqualTo(2);
+    }
+
+    @Test
+    public void seriesOfAddFirstAndThenRemoveLast() {
+        deque.addFirst(1);
+        deque.addFirst(2);
+        deque.addFirst(3);
+
+        assertThat(deque.removeLast()).isEqualTo(1);
+    }
+
+    @Test
+    public void seriesOfAddLastThenRemoveFirst() {
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+
+        assertThat(deque.removeFirst()).isEqualTo(1);
+        assertThat(deque.removeLast()).isEqualTo(3);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void throwExceptionWhenAttemptToRemoveFirstFromEmptyDeque() {
+        deque.removeFirst();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void throwExceptionWhenAttemptToRemoveLastFromEptyDeque() {
+        deque.removeLast();
+    }
+
+
+    private void addManyToTailDeque(int amount) {
+        for (int i = 0; i < amount; i++)
+            deque.addLast(i);
+    }
+
     @Test(expected = NullPointerException.class)
     public void throwNullPointerExceptionWhenClientAddsNullElementViaAddFirst() {
         deque.addFirst(null);
@@ -100,8 +152,6 @@ public class DequeTest {
     public void throwNullPointerExceptionWhenClientAddsNullElementViaAddLast() {
         deque.addLast(null);
     }
-
-
 
 
 }
