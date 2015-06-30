@@ -15,7 +15,7 @@ public class Deque<Item> implements Iterable<Item> {
         throwExceptioWhenNull(item);
         dequeSize++;
         if (first == null && last == null) {
-            first = new Node(first, null, item);
+            first = new Node(last, null, item);
             last = first;
             return;
         }
@@ -34,14 +34,18 @@ public class Deque<Item> implements Iterable<Item> {
         Node temp = first;
         first = first.next;
         dequeSize--;
+
+        clearLinksIfDequeIsEmpty();
+
         return temp.value;
     }
 
     public void addLast(Item item) {
         throwExceptioWhenNull(item);
         if (last == null && first == null) {
-            last = new Node(null, last, item);
+            last = new Node(null, first, item);
             first = last;
+            return;
         }
         Node oldLast = last;
         last = new Node(null, oldLast, item);
@@ -55,7 +59,16 @@ public class Deque<Item> implements Iterable<Item> {
         last = oldLast.previous;
         dequeSize--;
 
+        clearLinksIfDequeIsEmpty();
+
         return oldLast.value;
+    }
+
+    private void clearLinksIfDequeIsEmpty() {
+        if(isEmpty()) {
+            first = null;
+            last = null;
+        }
     }
 
     private void throwExceptionWhenEmpty() {

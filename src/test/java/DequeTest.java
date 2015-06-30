@@ -197,8 +197,43 @@ public class DequeTest {
         Iterator<Integer> it = deque.iterator();
         it.next();
         it.next();
-
     }
 
+    @Test
+    public void addFirstRemoveFirstInteraction() {
+        deque.addFirst(5);
+        deque.removeFirst();
+        deque.addFirst(6);
+
+        assertThat(deque.removeFirst()).isEqualTo(6);
+    }
+
+    @Test
+    public void addFirstRemoveLastInteraction() {
+        deque.addFirst(5);
+        deque.removeLast();
+        deque.addFirst(3);
+
+        assertThat(deque.removeLast()).isEqualTo(3);
+    }
+
+    @Test
+    public void seriesAddLastAndTwoRemoveFirstInteractions() {
+        deque.addLast(0);
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.removeFirst();
+        deque.addLast(5);
+        assertThat(deque.removeFirst()).isEqualTo(1);
+    }
+
+    @Test
+    public void seriesofAddFirstRemoveLastAndAddLastOperation() {
+        deque.isEmpty();
+        deque.addFirst(1);
+        deque.removeLast();
+        deque.addLast(3);
+    }
 
 }
