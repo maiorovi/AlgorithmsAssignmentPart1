@@ -5,7 +5,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     private Node first;
     private Node last;
-    private int dequeSize = 0;
+    private short dequeSize = 0;
 
     public boolean isEmpty() {
         return dequeSize == 0;
@@ -31,13 +31,16 @@ public class Deque<Item> implements Iterable<Item> {
 
     public Item removeFirst() {
         throwExceptionWhenEmpty();
-        Node temp = first;
+        Item value = first.value;
         first = first.next;
+        if (first != null) {
+            first.previous = null;
+        }
         dequeSize--;
 
         clearLinksIfDequeIsEmpty();
 
-        return temp.value;
+        return value;
     }
 
     public void addLast(Item item) {
@@ -57,6 +60,9 @@ public class Deque<Item> implements Iterable<Item> {
         throwExceptionWhenEmpty();
         Node oldLast = last;
         last = oldLast.previous;
+        if (last != null) {
+            last.next = null;
+        }
         dequeSize--;
 
         clearLinksIfDequeIsEmpty();
@@ -90,7 +96,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     private class DequeIterator implements Iterator<Item> {
 
-        private int itDequeSize;
+        private short itDequeSize;
         private Node current;
 
         private DequeIterator() {

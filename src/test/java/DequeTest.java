@@ -189,6 +189,8 @@ public class DequeTest {
         Iterator<Integer> it = deque.iterator();
 
         assertThat(it.next()).isEqualTo(0);
+        assertThat(it.next()).isEqualTo(1);
+        assertThat(it.next()).isEqualTo(2);
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -234,6 +236,14 @@ public class DequeTest {
         deque.addFirst(1);
         deque.removeLast();
         deque.addLast(3);
+    }
+
+    @Test
+    public void afterRemoveFirstThereIsNoLinksForRemovedNode() {
+        deque.addFirst(1);
+        deque.addFirst(2);
+
+//        deque.remo
     }
 
 }
