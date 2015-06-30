@@ -57,8 +57,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         int indexToReturn = StdRandom.uniform(pointer);
         exch(obj, indexToReturn, --pointer);
+        Item value = obj[pointer];
 
-        return obj[pointer];
+        obj[pointer] = null;
+
+        return value;
     }
 
     private void exch(Item[] container, int i, int j) {
