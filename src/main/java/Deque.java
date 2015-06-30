@@ -103,7 +103,7 @@ public class Deque<Item> implements Iterable<Item> {
         private DequeIterator() {
             itDequeSize = dequeSize;
             if (first != null)
-                current = new Node(first.next, first.previous, first.value);
+                current = first;
         }
 
         @Override
