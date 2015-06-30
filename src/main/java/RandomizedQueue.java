@@ -3,11 +3,11 @@ import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    private Item obj[];
+    private Item[] obj;
     private int pointer = 0;
 
     public RandomizedQueue() {
-        obj = (Item[])new Object[3];
+        obj = (Item[]) new Object[3];
     }
 
     public boolean isEmpty() {
@@ -40,7 +40,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private void changeQueueSize(int newSize) {
         Item[] temp = (Item[]) new Object[newSize];
 
-        for(int i = 0; i < pointer; i++) {
+        for (int i = 0; i < pointer; i++) {
             temp[i] = obj[i];
         }
 
@@ -81,7 +81,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         private RandomizedQueueIterator() {
             this.container = (Item[]) new Object[obj.length];
-            System.arraycopy(obj,0,container,0,obj.length);
+            System.arraycopy(obj, 0, container, 0, obj.length);
             this.itPointer = pointer;
         }
 

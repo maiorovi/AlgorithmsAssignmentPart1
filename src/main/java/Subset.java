@@ -6,7 +6,7 @@ public class Subset {
 
         RandomizedQueue<String> queue = new RandomizedQueue<>();
 
-        while(!StdIn.isEmpty()) {
+        while (!StdIn.isEmpty()) {
             queue.enqueue(StdIn.readString());
         }
 

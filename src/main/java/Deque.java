@@ -72,7 +72,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private void clearLinksIfDequeIsEmpty() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             first = null;
             last = null;
         }
