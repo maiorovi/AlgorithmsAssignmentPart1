@@ -240,10 +240,10 @@ public class DequeTest {
 
     @Test
     public void afterRemoveFirstThereIsNoLinksForRemovedNode() {
-        deque.addFirst(1);
-        deque.addFirst(2);
+        deque.addLast(0);
+        deque.addLast(1);
 
-//        deque.remo
+        assertThat(deque.size()).isEqualTo(2);
     }
 
 }

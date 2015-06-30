@@ -45,15 +45,16 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addLast(Item item) {
         throwExceptioWhenNull(item);
+        dequeSize++;
         if (last == null && first == null) {
             last = new Node(null, first, item);
             first = last;
             return;
         }
+
         Node oldLast = last;
         last = new Node(null, oldLast, item);
         oldLast.next = last;
-        dequeSize++;
     }
 
     public Item removeLast() {
