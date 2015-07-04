@@ -1,4 +1,4 @@
-public class Point {
+public class Point implements Comparable<Point>{
     private int x;
     private int y;
 
@@ -8,6 +8,10 @@ public class Point {
     }
 
     public double slopeTo(Point that) {
+        if (this.equals(that)) {
+            return Double.NEGATIVE_INFINITY;
+        }
+
         if (isVerticalLine(that)) {
             return 0;
         }
@@ -16,7 +20,10 @@ public class Point {
             return Double.POSITIVE_INFINITY;
         }
 
-        return -1;
+        double top = this.y - that.y;
+        double bot = this.x - that.x;
+
+        return top/bot;
     }
 
     private boolean isHorizontalLine(Point that) {
@@ -40,5 +47,18 @@ public class Point {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int compareTo(Point other) {
+        if ((other.y > this.y) || (other.y == this.y && this.x < other.x)) {
+            return -1;
+        }
+
+        if ((other.y <  this.y) || (other.y == this.y && this.x > other.x)) {
+            return 1;
+        }
+
+        return 0;
     }
 }
