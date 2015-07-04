@@ -108,4 +108,34 @@ public class PointTest {
 
         assertThat(that.compareTo(other)).isEqualTo(0);
     }
+
+    @Test
+    public void firstPointIsBiggerWhenItCreateVerticalLineWithInvokingPoint() {
+        Point other1 = new Point(1,5);
+        Point other2 = new Point(3,2);
+
+        assertThat(point.SLOPE_ORDER.compare(other1, other2)).isEqualTo(1);
+    }
+
+
+    @Test
+    public void whenCompareInvokingPointWithItSelfThenZeroIsReturned() {
+        assertThat(point.SLOPE_ORDER.compare(point, point)).isEqualTo(0);
+    }
+
+    @Test
+    public void whenSecondPointIsBiggerThenFirstREturnedminusOne() {
+        Point other1 = new Point(1,5);
+        Point other2 = new Point(3,2);
+
+        assertThat(point.SLOPE_ORDER.compare(other2, other1)).isEqualTo(-1);
+    }
+
+    @Test
+    public void whenSeconAndFirstPointCreateVerticalLineWithInvokingPointZeroShouldBeReturned() {
+        Point other1 = new Point(1, 4);
+        Point other2 = new Point(1, 8);
+
+        assertThat(point.SLOPE_ORDER.compare(other1, other2)).isEqualTo(0);
+    }
 }

@@ -1,4 +1,22 @@
+import java.util.Comparator;
+
 public class Point implements Comparable<Point>{
+    public final Comparator<Point> SLOPE_ORDER = new Comparator<Point>() {
+        @Override
+        public int compare(Point firstPoint, Point secondPoint) {
+            double firstSlope = slopeTo(firstPoint);
+            double secondSlope = slopeTo(secondPoint);
+
+            if (firstSlope > secondSlope) {
+                return 1;
+            } else if (firstSlope < secondSlope) {
+                return -1;
+            }
+
+            return 0;
+        }
+    };
+
     private int x;
     private int y;
 
