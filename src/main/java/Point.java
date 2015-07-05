@@ -79,4 +79,17 @@ public class Point implements Comparable<Point>{
 
         return 0;
     }
+
+    public void draw() {
+        StdDraw.point(x, y);
+    }
+
+    // draw line between this point and that point to standard drawing
+    public void drawTo(Point that) {
+        StdDraw.line(this.x, this.y, that.x, that.y);
+    }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
 }

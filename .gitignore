@@ -11,3 +11,10 @@
 .idea/*
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+*.png
+*.txt
+collinear/PointPlotter.java
+percolation-testing/CREDITS
+collinear/Point.java
+percolation-testing/PercolationVisualizer.java
+percolation-testing/InteractivePercolationVisualizer.java
