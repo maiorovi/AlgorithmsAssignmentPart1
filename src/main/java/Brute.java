@@ -36,9 +36,7 @@ public class Brute {
                             Arrays.sort(points);
                             System.out.println(points[0] + " -> " + points[1] +" -> "+ points[2] +" -> " + points[3]);
 
-                            for (int f = 1; f < points.length; f++){
-                                points[f].drawTo(points[f-1]);
-                            }
+                            points[0].drawTo(points[3]);
                         }
                     }
                 }

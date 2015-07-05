@@ -52,14 +52,14 @@ public class Point implements Comparable<Point>{
         return this.y == that.y;
     }
 
-    public boolean equals(Object that) {
+    private boolean equals(Point that) {
         if (that == this)
             return true;
         if (!(that instanceof Point)) {
             return false;
         }
 
-        Point other = (Point) that;
+        Point other = that;
         if (this.x == other.x && this.y == other.y) {
             return true;
         } else {
