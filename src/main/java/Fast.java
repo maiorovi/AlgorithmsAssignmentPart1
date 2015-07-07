@@ -22,8 +22,8 @@ public class Fast {
 
             Double currentSlope = Double.NEGATIVE_INFINITY;
 
-            for (int i = 1, counter = 1; i < pointContainer.length; i++) {
-                if (currentSlope.equals(startPoint.slopeTo(pointContainer[i]))) {
+            for (int i = 1, counter = 1; i <= pointContainer.length; i++) {
+                if ( i!= pointContainer.length && currentSlope.equals(startPoint.slopeTo(pointContainer[i]))) {
                     counter++;
                 } else if (counter >= 3) {
                     Point[] points = new Point[counter + 1];
@@ -41,9 +41,13 @@ public class Fast {
                     s = s.replaceFirst(" -> ", " ");
                     System.out.println(s);
                     points[0].drawTo(points[counter]);
+                    if (i == pointContainer.length)
+                        break;
                     currentSlope = startPoint.slopeTo(pointContainer[i]);
                     counter = 1;
                 } else {
+                    if (i == pointContainer.length)
+                        break;
                     currentSlope = startPoint.slopeTo(pointContainer[i]);
                     counter = 1;
                 }
