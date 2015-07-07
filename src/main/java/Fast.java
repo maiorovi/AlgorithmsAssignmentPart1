@@ -9,20 +9,16 @@ public class Fast {
         StdDraw.setXscale(0, 32768);
         StdDraw.setYscale(0, 32768);
         Point[] pointContainer = fast.readFromFile(args[0]);
-//        Point startPoint = pointContainer[0];
-//        startPoint.draw();
-//        Double[] slopes = new Double[pointContainer.length-1];
+        Point[] tempPoint = new Point[pointContainer.length];
 
-//        for (int i = 1; i < pointContainer.length; i++) {
-//            Point currentPoint = pointContainer[i];
-//            slopes[i-1] = startPoint.slopeTo(currentPoint);
-//            currentPoint.draw();
-//        }
-//
-//        Arrays.sort(slopes);
+        for (int i = 0; i < pointContainer.length; i++) {
+            pointContainer[i].draw();
+            tempPoint[i] = pointContainer[i];
+        }
+
         for(int t = 0; t < pointContainer.length; t++) {
             Arrays.sort(pointContainer, pointContainer[t].SLOPE_ORDER);
-            Point startPoint = pointContainer[t];
+            Point startPoint = pointContainer[0];
 
             Double currentSlope = Double.NEGATIVE_INFINITY;
 
@@ -44,7 +40,7 @@ public class Fast {
 
                     s = s.replaceFirst(" -> ", " ");
                     System.out.println(s);
-                    points[0].drawTo(points[counter - 1]);
+                    points[0].drawTo(points[counter]);
                     currentSlope = startPoint.slopeTo(pointContainer[i]);
                     counter = 1;
                 } else {
