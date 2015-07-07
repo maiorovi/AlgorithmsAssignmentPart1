@@ -45,11 +45,11 @@ public class Point implements Comparable<Point>{
     }
 
     private boolean isHorizontalLine(Point that) {
-        return this.y == that.y;
+        return this.x == that.x;
     }
 
     private boolean isVerticalLine(Point that) {
-        return this.x == that.x;
+        return this.y == that.y;
     }
 
     private boolean equals(Point that) {
