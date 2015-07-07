@@ -45,13 +45,6 @@ public class PointTest {
     }
 
     @Test
-    public void pointWithSameCoordinatesShouldBeConsideredEquals() {
-        Point other = new Point(1,2);
-
-        assertThat(point.equals(other)).isTrue();
-    }
-
-    @Test
     public void slopeBetweenTheSamePointIsNegativeInfinity() {
         assertThat(point.slopeTo(point)).isEqualTo(Double.NEGATIVE_INFINITY);
     }
