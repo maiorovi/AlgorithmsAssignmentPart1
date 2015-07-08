@@ -23,9 +23,6 @@ public class Fast {
             Arrays.sort(pointContainer, tempPoint[t].SLOPE_ORDER);
             Point startPoint = tempPoint[t];
 
-            if (startPoint.toString().equals("(10926, 11533)"))
-            System.out.println("fuck you");
-
             Double currentSlope = Double.NEGATIVE_INFINITY;
 
             for (int i = 1, counter = 1; i <= pointContainer.length; i++) {
