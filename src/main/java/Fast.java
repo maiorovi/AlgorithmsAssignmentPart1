@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class Fast {
@@ -15,6 +16,8 @@ public class Fast {
             pointContainer[i].draw();
             tempPoint[i] = pointContainer[i];
         }
+
+        HashSet usedLines = new HashSet();
 
         for(int t = 0; t < pointContainer.length; t++) {
             Arrays.sort(pointContainer, pointContainer[t].SLOPE_ORDER);
@@ -39,8 +42,13 @@ public class Fast {
                     }
 
                     s = s.replaceFirst(" -> ", " ");
-                    System.out.println(s);
-                    points[0].drawTo(points[counter]);
+
+                    if (!usedLines.contains(s)) {
+                        System.out.println(s);
+                        points[0].drawTo(points[counter]);
+                        usedLines.add(s);
+                    }
+
                     if (i == pointContainer.length)
                         break;
                     currentSlope = startPoint.slopeTo(pointContainer[i]);
