@@ -20,8 +20,11 @@ public class Fast {
         HashSet usedLines = new HashSet();
 
         for(int t = 0; t < pointContainer.length; t++) {
-            Arrays.sort(pointContainer, pointContainer[t].SLOPE_ORDER);
-            Point startPoint = pointContainer[0];
+            Arrays.sort(pointContainer, tempPoint[t].SLOPE_ORDER);
+            Point startPoint = tempPoint[t];
+
+            if (startPoint.toString().equals("(10926, 11533)"))
+            System.out.println("fuck you");
 
             Double currentSlope = Double.NEGATIVE_INFINITY;
 
