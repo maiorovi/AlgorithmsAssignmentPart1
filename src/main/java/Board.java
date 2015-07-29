@@ -14,17 +14,43 @@ public class Board {
     }
 
     public int hamming() {
-        int outOfPlaceBlocks = 0;
+        int priority = 0;
 
         for(int i = 0, counter = 1; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] != counter && board[i][j] != 0) {
-                    outOfPlaceBlocks++;
+                    priority++;
                 }
                 counter++;
             }
         }
 
-        return outOfPlaceBlocks;
+        return priority;
+    }
+
+    public int manhattan() {
+        int priority = 0;
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] != computeExpectedValue(i, j) + 1 && board[i][j] != 0) {
+                    priority = priority + Math.abs(j - getCorrectX(board[i][j])) +
+                            Math.abs(i - getCorrectY(board[i][j]));
+                }
+            }
+        }
+        return priority;
+    }
+
+    private int computeExpectedValue(int i, int j) {
+        return i * dimension() + j;
+    }
+
+    private int getCorrectX(int value) {
+        return (value - 1) % dimension();
+    }
+
+    private int getCorrectY(int value) {
+        return (value - 1) / dimension();
     }
 }

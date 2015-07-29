@@ -61,8 +61,41 @@ public class BoardTest {
         assertThat(board.hamming()).isEqualTo(4);
     }
 
-//    @Test
-//    public void returnsThatDistanceBetweenGoalBoardIsOne
+    @Test
+    public void returnsManhattanDistancesZeroWhenAllBlocksInPosition() {
+        int[][] boardPrototype = {{1,2,3}, {4,5,6}, {7,8,9}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.manhattan()).isEqualTo(0);
+    }
+
+    @Test
+    public void returnsOneWhenOneBlocksIsOutOfPlaceAndNeedsOneMoveToPutThemInPlace() {
+        int[][] boardPrototype = {{1,2,3}, {4,5,6}, {7,0,8}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.manhattan()).isEqualTo(1);
+    }
+
+    @Test
+    public void returnsThreeWhenFewBlocksIsOutOfPlace() {
+        int [][] boardPrototype = {{0, 1, 3}, {4, 2, 5}, {7,8,6}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.manhattan()).isEqualTo(4);
+    }
+
+    @Test
+    public void computesManhattanDistanceOnRandomBoard() {
+        int[][] boardPrototype = {{8,1,3}, {4, 0, 2}, {7,6,5}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.manhattan()).isEqualTo(10);
+    }
 
     private int[][] createPrototypeBoard(int width, int height) {
         int[][] board = new int[height][width];
