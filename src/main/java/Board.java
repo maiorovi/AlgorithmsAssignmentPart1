@@ -42,6 +42,25 @@ public class Board {
         return priority;
     }
 
+    public boolean isGoal() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] != computeExpectedValue(i,j) + 1 && !isLastAndEqualZero(i, j)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isLastAndEqualZero(int i, int j) {
+        if (dimension() - i == 1 && dimension() - j == 1 && board[i][j] == 0)
+            return true;
+
+        return false;
+    }
+
     private int computeExpectedValue(int i, int j) {
         return i * dimension() + j;
     }

@@ -97,6 +97,24 @@ public class BoardTest {
         assertThat(board.manhattan()).isEqualTo(10);
     }
 
+    @Test
+    public void isGoalReturnsTrueWhenBoardInCorrectPosition() {
+        int[][] boardPrototype = {{1,2,3}, {4,5,6}, {7,8,0}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.isGoal()).isTrue();
+    }
+
+    @Test
+    public void isGoalReturnsFalseWhenBoardInWrongPosition() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.isGoal()).isFalse();
+    }
+
     private int[][] createPrototypeBoard(int width, int height) {
         int[][] board = new int[height][width];
 
