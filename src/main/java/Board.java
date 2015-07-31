@@ -61,6 +61,26 @@ public class Board {
         return false;
     }
 
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Board))
+            return false;
+
+        Board other = (Board) obj;
+
+        if (other.dimension() != this.dimension())
+            return false;
+
+        for(int i = 0; i < dimension(); i++) {
+            for(int j = 0; j < dimension(); j++) {
+                if (this.board[i][j] != other.board[i][j]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private int computeExpectedValue(int i, int j) {
         return i * dimension() + j;
     }

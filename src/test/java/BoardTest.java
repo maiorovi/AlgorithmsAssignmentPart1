@@ -115,6 +115,66 @@ public class BoardTest {
         assertThat(board.isGoal()).isFalse();
     }
 
+    @Test
+    public void  twoBoardsIsEqualToItself() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.equals(board)).isTrue();
+    }
+
+    @Test
+    public void whenPassedNullToEqualsItReturnsFalse() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.equals(null)).isFalse();
+    }
+
+    @Test
+    public void whenObjectOfWrongInstancePassedToEqualsItReturnsFalse() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.equals(new Object())).isFalse();
+    }
+
+    @Test
+    public void whenBoardHaveDifferentDimensionsThenEqualsReturnsFalse() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+        int[][] boardPrototypeWithDifferenDimension = {{1,2}, {3,0}};
+
+        Board board = new Board(boardPrototype);
+        Board otherBoard = new Board(boardPrototypeWithDifferenDimension);
+
+        assertThat(board.equals(otherBoard)).isFalse();
+    }
+
+    @Test
+    public void twoBoardAreEqualWhenTheyHaveTheSamePositions() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+
+        Board board = new Board(boardPrototype);
+        Board board1 = new Board(boardPrototype);
+
+        assertThat(board.equals(board1)).isTrue();
+    }
+
+    @Test
+    public void whenTwoBoardsHaveDifferentPositionsReturnsFalse() {
+        int[][] boardPrototype = {{3,2,1}, {4,5,6}, {7,8,0}};
+        int[][] boardPrototype1 = {{3,1,2}, {4,5,6}, {7,8,0}};
+
+
+        Board board = new Board(boardPrototype);
+        Board board1 = new Board(boardPrototype1);
+
+        assertThat(board.equals(board1)).isFalse();
+    }
+
     private int[][] createPrototypeBoard(int width, int height) {
         int[][] board = new int[height][width];
 
