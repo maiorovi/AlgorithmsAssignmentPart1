@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
 
     private int[][] board;
@@ -61,6 +63,12 @@ public class Board {
         return false;
     }
 
+    public Iterable<Board> neighbors() {
+        int index = findZeroIndex();
+        int xValue = index % dimension();
+        return getNeighboringBoards(xValue, getCorrectY(index));
+    }
+
     public boolean equals(Object obj) {
         if (!(obj instanceof Board))
             return false;
@@ -92,4 +100,55 @@ public class Board {
     private int getCorrectY(int value) {
         return (value - 1) / dimension();
     }
+
+    private int findZeroIndex() {
+        int value = -1;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j]  == 0) {
+                    value = computeExpectedValue(i, j);
+                }
+            }
+        }
+        return value;
+    }
+
+    private ArrayList<Board> getNeighboringBoards(int x, int y) {
+        ArrayList<Board> boards = new ArrayList<Board>();
+
+        if(y - 1 >= 0) {
+            boards.add(swapAndReturnNewBoard(x, y, x, y - 1));
+        }
+
+        if (x - 1 >= 0 ) {
+            boards.add(swapAndReturnNewBoard(x, y, x - 1, y));
+        }
+
+        if ( x + 1 < board.length ) {
+            boards.add(swapAndReturnNewBoard(x, y, x + 1, y));
+        }
+
+        if (y + 1 < board.length) {
+            boards.add(swapAndReturnNewBoard(x, y, x, y + 1));
+        }
+
+        return boards;
+    }
+
+    private Board swapAndReturnNewBoard(int x, int y, int x1, int y1) {
+        int[][] newBoard = new int[board.length][board.length];
+
+        for (int i = 0; i < board.length; i++) {
+            for(int j = 0; j <board.length; j++) {
+                newBoard[i][j] = board[i][j];
+            }
+        }
+
+        int temp = newBoard[x][y];
+        newBoard[x][y] = newBoard[x1][y1];
+        newBoard[x1][y1] = temp;
+
+        return new Board(newBoard);
+    }
+
 }

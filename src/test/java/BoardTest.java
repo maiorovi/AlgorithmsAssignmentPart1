@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
@@ -173,6 +176,44 @@ public class BoardTest {
         Board board1 = new Board(boardPrototype1);
 
         assertThat(board.equals(board1)).isFalse();
+    }
+
+    @Test
+    public void returnsTwoNeighborsWhenInitialSearchNodeInTheCorner() {
+        int[][] boardPrototype = {{0,2,1}, {4,5,6}, {7,8,3}};
+        int[][] expectedBoardFirst = {{2,0,1}, {4,5,6}, {7,8,3}};
+        int[][] expectedBoardSecond = {{4,2,1}, {0,5,6}, {7,8,3}};
+
+        Board board = new Board(boardPrototype);
+
+        Iterator<Board> it = board.neighbors().iterator();
+
+        Board neighbor = it.next();
+
+        assertThat(neighbor.equals(new Board(expectedBoardSecond))).isTrue();
+        assertThat(it.next().equals(new Board(expectedBoardFirst))).isTrue();
+    }
+
+    @Test
+    public void returnsFourNeighborsWhenInitialSerachNodeInTheMiddle() {
+        int[][] boardPrototype = {{5,2,1}, {4,0,6}, {7,8,3}};
+
+        Board board = new Board(boardPrototype);
+
+        ArrayList<Board> neighbors = (ArrayList) board.neighbors();
+
+        assertThat(neighbors.size()).isEqualTo(4);
+    }
+
+    @Test
+    public void returnsThreeNeighbordsWhenInitialSerachNodeNearTheLeftSide() {
+        int[][] boardPrototype = {{5,0,1}, {4,2,6}, {7,8,3}};
+
+        Board board = new Board(boardPrototype);
+
+        ArrayList<Board> neighbors = (ArrayList) board.neighbors();
+
+        assertThat(neighbors.size()).isEqualTo(3);
     }
 
     private int[][] createPrototypeBoard(int width, int height) {
