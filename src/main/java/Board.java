@@ -162,6 +162,26 @@ public class Board {
         return swapAndReturnNewBoard(getRow(startPosition), getCol(startPosition), getRow(startPosition), getCol(startPosition)+1);
     }
 
+    public String toString() {
+        StringBuilder representationBuilder = new StringBuilder();
+        representationBuilder.append(board.length);
+        representationBuilder.append("\n");
+        for (int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board.length; j++) {
+                representationBuilder.append(board[i][j]);
+                appendSymbolToRepresentationButNotBeforeLastSymbol(representationBuilder, j, " ");
+            }
+            appendSymbolToRepresentationButNotBeforeLastSymbol(representationBuilder, i, "\n");
+        }
+        return representationBuilder.toString();
+    }
+
+    private void appendSymbolToRepresentationButNotBeforeLastSymbol(StringBuilder representationBuilder, int i, String str) {
+        if (i != board.length - 1) {
+            representationBuilder.append(str);
+        }
+    }
+
     private int getRow(int position) {
         return position / dimension();
     }

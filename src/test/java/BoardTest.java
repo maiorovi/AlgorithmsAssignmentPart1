@@ -238,6 +238,16 @@ public class BoardTest {
         assertThat(result.equals(new Board(expectedBoard))).isTrue();
     }
 
+    @Test
+    public void printsTheBoardRepresentationAsAMatrix() {
+        int[][] boardPrototype = {{5,0,1}, {4,2,6}, {7,8,3}};
+        String expectedRepresentation = "3\n5 0 1\n4 2 6\n7 8 3";
+
+        Board board = new Board(boardPrototype);
+
+        assertThat(board.toString()).isEqualTo(expectedRepresentation);
+    }
+
     private int[][] createPrototypeBoard(int width, int height) {
         int[][] board = new int[height][width];
 
