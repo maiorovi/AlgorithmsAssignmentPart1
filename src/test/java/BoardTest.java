@@ -206,7 +206,7 @@ public class BoardTest {
     }
 
     @Test
-    public void returnsThreeNeighbordsWhenInitialSerachNodeNearTheLeftSide() {
+    public void returnsThreeNeighborsWhenInitialSarahNodeNearTheLeftSide() {
         int[][] boardPrototype = {{5,0,1}, {4,2,6}, {7,8,3}};
 
         Board board = new Board(boardPrototype);
@@ -214,6 +214,28 @@ public class BoardTest {
         ArrayList<Board> neighbors = (ArrayList) board.neighbors();
 
         assertThat(neighbors.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void swapTwoAdjacentPositionsInTheFirstRowOfTheBoard() {
+        int[][] boardPrototype = {{5,2,1}, {4,0,6}, {7,8,3}};
+        int[][] expectedBoard = {{2,5,1}, {4,0,6}, {7,8,3}};
+
+        Board board = new Board(boardPrototype);
+        Board result = board.twin();
+
+        assertThat(result.equals(new Board(expectedBoard))).isTrue();
+    }
+
+    @Test
+    public void swapTwoAdjacentPositionsInTheSecondRow() {
+        int[][] boardPrototype = {{5,0,1}, {4,2,6}, {7,8,3}};
+        int[][] expectedBoard = {{5,0,1}, {2,4,6}, {7,8,3}};
+
+        Board board = new Board(boardPrototype);
+        Board result = board.twin();
+
+        assertThat(result.equals(new Board(expectedBoard))).isTrue();
     }
 
     private int[][] createPrototypeBoard(int width, int height) {

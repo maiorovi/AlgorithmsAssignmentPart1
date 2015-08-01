@@ -151,4 +151,22 @@ public class Board {
         return new Board(newBoard);
     }
 
+    public Board twin() {
+        int startPosition = 0;
+        while (board[getRow(startPosition)][getCol(startPosition)] == 0 || board[getRow(startPosition)][getCol(startPosition) + 1] == 0) {
+            if (getCol(startPosition) == dimension() - 2) {
+                startPosition++;
+            }
+            startPosition++;
+        }
+        return swapAndReturnNewBoard(getRow(startPosition), getCol(startPosition), getRow(startPosition), getCol(startPosition)+1);
+    }
+
+    private int getRow(int position) {
+        return position / dimension();
+    }
+
+    private int getCol(int position) {
+        return position % dimension();
+    }
 }
