@@ -195,6 +195,24 @@ public class BoardTest {
     }
 
     @Test
+    public void returnsCorrectNeighbordsOn4x4Board() {
+        int[][] boardPrototype = {{1,2,3,4}, {5,6,7,8}, {9,10,12,0}, {13,14,11,15}};
+        int[][] first = {{1,2,3,4}, {5,6,7,8}, {9,10,0,12}, {13,14,11,15}};
+        int[][] second = {{1,2,3,4}, {5,6,7,0}, {9,10,12,8}, {13,14,11,15}};
+        int[][] third = {{1,2,3,4}, {5,6,7,8}, {9,10,12,15}, {13,14,11,0}};
+
+        Board board = new Board(boardPrototype);
+
+        Iterator<Board> it = board.neighbors().iterator();
+
+        Board neighbor = it.next();
+
+        assertThat(neighbor).isEqualTo(new Board(first));
+        assertThat(it.next()).isEqualTo(new Board(second));
+        assertThat(it.next()).isEqualTo(new Board(third));
+    }
+
+    @Test
     public void returnsFourNeighborsWhenInitialSerachNodeInTheMiddle() {
         int[][] boardPrototype = {{5,2,1}, {4,0,6}, {7,8,3}};
 

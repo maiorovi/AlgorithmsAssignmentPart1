@@ -65,8 +65,8 @@ public class Board {
 
     public Iterable<Board> neighbors() {
         int index = findZeroIndex();
-        int xValue = index % dimension();
-        return getNeighboringBoards(xValue, getCorrectY(index));
+//        int xValue = index % dimension();
+        return getNeighboringBoards(getRow(index), getCol(index));
     }
 
     public boolean equals(Object obj) {
