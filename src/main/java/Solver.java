@@ -4,25 +4,6 @@ import java.util.HashSet;
 
 public class Solver {
 
-    private Board initial;
-    private short isSolvableCash = 0;
-//    private ArrayList<Board> visitedBoards;
-    private int numberOfMoves = -1;
-    private ArrayList<Board> solution = new ArrayList<Board>();
-
-    private Runnable initialBoard = new Runnable() {
-        @Override
-        public void run() {
-            runAStarAlgorithm(initial);
-        }
-    };
-    private Runnable twinBoard = new Runnable() {
-        @Override
-        public void run() {
-            runAStarAlgorithm(initial.twin());
-        }
-    };
-
     private Comparator<Board> comparator = new Comparator<Board>() {
         @Override
         public int compare(Board one, Board two) {
@@ -36,75 +17,77 @@ public class Solver {
         }
     };
 
+    private Board initial;
+    private boolean solvable;
+    private short isSolvableCash = 0;
+    private  MinPQ<Board> initialPq =  new MinPQ<Board>(comparator);
+    private MinPQ<Board> twinPq = new MinPQ<Board>(comparator);
+    private ArrayList<Board> visitedBoardsInitial = new ArrayList<Board>();
+    private ArrayList<Board> visitedBoardsTwin = new ArrayList<Board>();
+    private ArrayList<Board> solution = new ArrayList<Board>();
+
+    private int numberOfMoves = -1;
+
+
+
     public Solver(Board initial) {
         if (initial == null) {
             throw new NullPointerException();
         }
         this.initial = initial;
-//        visitedBoards = new ArrayList<Board>();
+
+        initialPq.insert(initial);
+        visitedBoardsInitial.add(initial);
+        twinPq.insert(initial.twin());
+        visitedBoardsTwin.add(initial.twin());
+        boolean status = false;
+
+        while(!status) {
+            status = runAStarAlgorithm();
+        }
     }
 
     public boolean isSolvable() {
-        Thread initialBoardSearch = new Thread(initialBoard);
-        Thread twinBoardSearch = new Thread(twinBoard);
-        initialBoardSearch.start();
-        twinBoardSearch.start();
-
-        while (initialBoardSearch.isAlive() && twinBoardSearch.isAlive()) ;
-
-        if (initialBoardSearch.isAlive()) {
-            initialBoardSearch.interrupt();
-            isSolvableCash = -1;
-            return false;
-        } else if (twinBoardSearch.isAlive()) {
-            twinBoardSearch.interrupt();
-            isSolvableCash = 1;
-            return true;
-        }
-
-        return false;
+        return solvable;
     }
 
-    private boolean runAStarAlgorithm(Board initial) {
-        MinPQ<Board> queue = new MinPQ<Board>(comparator);
-        int numberOfMoves = -1;
-        ArrayList<Board> solution = new ArrayList<Board>();
-        ArrayList<Board> visitedBoards = new ArrayList<Board>();
-
-
-        queue.insert(initial);
-        visitedBoards.add(initial);
-
-        while(!queue.isEmpty()) {
-            Board min = queue.delMin();
+    private boolean runAStarAlgorithm() {
+            Board min = initialPq.delMin();
             if (!min.equals(initial))
                 solution.add(min);
             numberOfMoves++;
 
             if (min.isGoal()) {
-                this.numberOfMoves = numberOfMoves;
-                this.solution = solution;
+                solvable = true;
                 return true;
             }
 
             for(Board board : min.neighbors()) {
-                if (!visitedBoards.contains(board)) {
-                    queue.insert(board);
-                    visitedBoards.add(board);
+                if (!visitedBoardsInitial.contains(board)) {
+                    initialPq.insert(board);
+                    visitedBoardsInitial.add(board);
                 }
             }
-        }
 
-        this.numberOfMoves = numberOfMoves;
-        this.solution = solution;
+            Board twinMin = twinPq.delMin();
+
+            if (twinMin.isGoal()) {
+                solvable = false;
+                return true;
+            }
+
+            for(Board board : twinMin.neighbors()) {
+                if (!visitedBoardsTwin.contains(board)) {
+                    twinPq.insert(board);
+                    visitedBoardsTwin.add(board);
+                }
+            }
+
         return false;
     }
 
     public int moves() {
-        if (isSolvableCash == 1) {
-            return numberOfMoves;
-        } else if(isSolvable()) {
-            runAStarAlgorithm(initial);
+        if( solvable ){
             return numberOfMoves;
         }
 
@@ -112,13 +95,9 @@ public class Solver {
     }
 
     public Iterable<Board> solution() {
-        if (isSolvableCash == 1) {
-            return solution;
-        } else if(isSolvable()) {
-            runAStarAlgorithm(initial);
+        if(solvable) {
             return solution;
         }
-
         return null;
     }
 }
