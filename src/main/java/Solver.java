@@ -6,6 +6,20 @@ public class Solver {
 
     private Board initial;
     private ArrayList<Board> visitedBoards;
+    private Runnable initialBoard = new Runnable() {
+        @Override
+        public void run() {
+            runAStarAlgorithm(initial);
+        }
+    };
+
+    private Runnable twinBoard = new Runnable() {
+        @Override
+        public void run() {
+            runAStarAlgorithm(initial.twin());
+        }
+    };
+
     private Comparator<Board> comparator = new Comparator<Board>() {
         @Override
         public int compare(Board one, Board two) {
@@ -25,7 +39,22 @@ public class Solver {
     }
 
     public boolean isSolvable() {
-        return runAStarAlgorithm(initial);
+        Thread initialBoardSearch = new Thread(initialBoard);
+        Thread twinBoardSearch = new Thread(twinBoard);
+        initialBoardSearch.start();
+        twinBoardSearch.start();
+
+        while (initialBoardSearch.isAlive() && twinBoardSearch.isAlive()) ;
+
+        if (initialBoardSearch.isAlive()) {
+            initialBoardSearch.interrupt();
+            return false;
+        } else if (twinBoardSearch.isAlive()) {
+            twinBoardSearch.interrupt();
+            return true;
+        }
+
+        return false;
     }
 
     private boolean runAStarAlgorithm(Board initial) {
