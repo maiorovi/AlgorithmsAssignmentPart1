@@ -5,14 +5,17 @@ import java.util.HashSet;
 public class Solver {
 
     private Board initial;
-    private ArrayList<Board> visitedBoards;
+    private short isSolvableCash = 0;
+//    private ArrayList<Board> visitedBoards;
+    private int numberOfMoves = -1;
+    private ArrayList<Board> solution = new ArrayList<Board>();
+
     private Runnable initialBoard = new Runnable() {
         @Override
         public void run() {
             runAStarAlgorithm(initial);
         }
     };
-
     private Runnable twinBoard = new Runnable() {
         @Override
         public void run() {
@@ -34,8 +37,11 @@ public class Solver {
     };
 
     public Solver(Board initial) {
+        if (initial == null) {
+            throw new NullPointerException();
+        }
         this.initial = initial;
-        visitedBoards = new ArrayList<Board>();
+//        visitedBoards = new ArrayList<Board>();
     }
 
     public boolean isSolvable() {
@@ -48,9 +54,11 @@ public class Solver {
 
         if (initialBoardSearch.isAlive()) {
             initialBoardSearch.interrupt();
+            isSolvableCash = -1;
             return false;
         } else if (twinBoardSearch.isAlive()) {
             twinBoardSearch.interrupt();
+            isSolvableCash = 1;
             return true;
         }
 
@@ -59,12 +67,23 @@ public class Solver {
 
     private boolean runAStarAlgorithm(Board initial) {
         MinPQ<Board> queue = new MinPQ<Board>(comparator);
+        int numberOfMoves = -1;
+        ArrayList<Board> solution = new ArrayList<Board>();
+        ArrayList<Board> visitedBoards = new ArrayList<Board>();
+
+
         queue.insert(initial);
         visitedBoards.add(initial);
 
         while(!queue.isEmpty()) {
             Board min = queue.delMin();
+            if (!min.equals(initial))
+                solution.add(min);
+            numberOfMoves++;
+
             if (min.isGoal()) {
+                this.numberOfMoves = numberOfMoves;
+                this.solution = solution;
                 return true;
             }
 
@@ -76,6 +95,30 @@ public class Solver {
             }
         }
 
+        this.numberOfMoves = numberOfMoves;
+        this.solution = solution;
         return false;
+    }
+
+    public int moves() {
+        if (isSolvableCash == 1) {
+            return numberOfMoves;
+        } else if(isSolvable()) {
+            runAStarAlgorithm(initial);
+            return numberOfMoves;
+        }
+
+        return -1;
+    }
+
+    public Iterable<Board> solution() {
+        if (isSolvableCash == 1) {
+            return solution;
+        } else if(isSolvable()) {
+            runAStarAlgorithm(initial);
+            return solution;
+        }
+
+        return null;
     }
 }
