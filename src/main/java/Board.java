@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private int[][] board;
+    private final int[][] board;
 
     public Board(int board[][]) {
         if (board.length != board[0].length)

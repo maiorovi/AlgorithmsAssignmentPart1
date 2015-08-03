@@ -78,7 +78,7 @@ public class SolverTest {
         Solver solver = new Solver(board);
         ArrayList<Board> solution = (ArrayList<Board>)solver.solution();
 
-        assertThat(solution.size()).isEqualTo(4);
+        assertThat(solution.size()).isEqualTo(5);
     }
 
     @Test(expected = NullPointerException.class)

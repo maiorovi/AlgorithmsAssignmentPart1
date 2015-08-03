@@ -1,13 +1,12 @@
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 
 public class Solver {
 
     private Comparator<Board> comparator = new Comparator<Board>() {
         @Override
         public int compare(Board one, Board two) {
-            int result = one.manhattan() - two.manhattan();
+            int result = (one.manhattan()) - (two.manhattan());
             if (result > 0)
                 return 1;
             else if (result == 0)
@@ -26,7 +25,7 @@ public class Solver {
     private ArrayList<Board> visitedBoardsTwin = new ArrayList<Board>();
     private ArrayList<Board> solution = new ArrayList<Board>();
 
-    private int numberOfMoves = -1;
+    private int numberOfMoves = 0;
 
 
 
@@ -53,9 +52,10 @@ public class Solver {
 
     private boolean runAStarAlgorithm() {
             Board min = initialPq.delMin();
-            if (!min.equals(initial))
-                solution.add(min);
-            numberOfMoves++;
+            if (!min.equals(initial)) {
+                numberOfMoves++;
+            }
+            solution.add(min);
 
             if (min.isGoal()) {
                 solvable = true;
