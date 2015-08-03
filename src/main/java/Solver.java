@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class Solver {
@@ -97,12 +98,12 @@ public class Solver {
     public Iterable<Board> solution() {
         if(solvable) {
             SearchNode temp = goal;
-            Stack<Board> solutionBoards = new Stack();
+            LinkedList<Board> solutionBoards = new LinkedList<>();
             while( temp.prev != null) {
-                solutionBoards.push(temp.board);
+                solutionBoards.addFirst(temp.board);
                 temp = temp.prev;
             }
-            solutionBoards.push(temp.board);
+            solutionBoards.addFirst(temp.board);
             return solutionBoards;
         }
         return null;
