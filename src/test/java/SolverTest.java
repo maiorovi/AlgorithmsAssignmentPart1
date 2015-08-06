@@ -1,7 +1,6 @@
 import org.junit.Test;
-import org.mockito.internal.matchers.Null;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -77,7 +76,7 @@ public class SolverTest {
         int[][] boardPrototype = {{0,1,3}, {4,2,5}, {7,8,6}};
         Board board = new Board(boardPrototype);
         Solver solver = new Solver(board);
-        Stack<Board> solution = (Stack<Board>)solver.solution();
+        LinkedList<Board> solution = (LinkedList<Board>)solver.solution();
 
         assertThat(solution.size()).isEqualTo(5);
     }
