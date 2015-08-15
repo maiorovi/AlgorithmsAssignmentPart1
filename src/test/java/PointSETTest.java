@@ -1,6 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PointSETTest {
@@ -54,5 +57,40 @@ public class PointSETTest {
         pointSet.insert(new Point2D(0,0));
 
         assertThat(pointSet.contains(new Point2D(1,1))).isFalse();
+    }
+
+    @Test
+    public void rangeReturnsAllPointsInsideTheRectangle() {
+        RectHV rect = new RectHV(0,0,10,10);
+
+        pointSet.insert(point(1,1));
+        pointSet.insert(point(2,3));
+
+        ArrayList<Point2D> collection = (ArrayList)pointSet.range(rect);
+
+        assertThat(collection.size()).isEqualTo(2);
+        Iterator<Point2D> it = collection.iterator();
+        assertThat(it.next()).isEqualTo(point(1,1));
+        assertThat(it.next()).isEqualTo(point(2,3));
+    }
+
+    @Test
+    public void dontReturnPointNotInsideTheRectangle() {
+        RectHV rect = new RectHV(0,0,10,10);
+
+        pointSet.insert(point(1,1));
+        pointSet.insert(point(2,3));
+        pointSet.insert(point(11,11));
+
+        ArrayList<Point2D> collection = (ArrayList)pointSet.range(rect);
+
+        assertThat(collection.size()).isEqualTo(2);
+        Iterator<Point2D> it = collection.iterator();
+        assertThat(it.next()).isEqualTo(point(1,1));
+        assertThat(it.next()).isEqualTo(point(2,3));
+    }
+
+    private static Point2D point(int x, int y) {
+        return new Point2D(x,y);
     }
 }
