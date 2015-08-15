@@ -90,6 +90,27 @@ public class PointSETTest {
         assertThat(it.next()).isEqualTo(point(2,3));
     }
 
+    @Test
+    public void distanceToNearestPointIsZero() {
+        Point2D expectedPoint = point(0, 0);
+
+        pointSet.insert(point(0,0));
+
+        assertThat(pointSet.nearest(point(0,0))).isEqualTo(expectedPoint);
+    }
+
+    @Test
+    public void returnsPointWithTheSmallestDistance() {
+        Point2D expectedPoint = point(3,3);
+
+        pointSet.insert(point(0,0));
+        pointSet.insert(point(1,1));
+        pointSet.insert(point(2,2));
+        pointSet.insert(point(3,3));
+
+        assertThat(pointSet.nearest(point(4,4))).isEqualTo(expectedPoint);
+    }
+
     private static Point2D point(int x, int y) {
         return new Point2D(x,y);
     }

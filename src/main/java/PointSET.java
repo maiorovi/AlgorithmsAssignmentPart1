@@ -24,12 +24,27 @@ public class PointSET {
     public Iterable<Point2D> range(RectHV rect) {
         ArrayList<Point2D> pointsInsideRect = new ArrayList<Point2D>();
 
-        for(Point2D point : pointSet) {
+        for (Point2D point : pointSet) {
             if (rect.contains(point)) {
                 pointsInsideRect.add(point);
             }
         }
 
         return pointsInsideRect;
+    }
+
+    public Point2D nearest(Point2D p) {
+        Point2D nearestPoint = null;
+        double distance = Double.MAX_VALUE;
+
+        for (Point2D point : pointSet) {
+            double tempDistance = Math.sqrt(Math.pow(point.x() - p.x(), 2) + Math.pow(point.y() - p.y(), 2));
+            if (tempDistance < distance) {
+                distance = tempDistance;
+                nearestPoint = point;
+            }
+        }
+
+        return nearestPoint;
     }
 }
