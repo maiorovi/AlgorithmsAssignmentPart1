@@ -47,4 +47,12 @@ public class PointSET {
 
         return nearestPoint;
     }
+
+    public void draw() {
+        StdDraw.setXscale(0, 32000);
+        StdDraw.setYscale(0, 32000);
+        for (Point2D point : pointSet) {
+            StdDraw.point(point.x(), point.y());
+        }
+    }
 }

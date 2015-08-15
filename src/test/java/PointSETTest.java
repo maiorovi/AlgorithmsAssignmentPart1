@@ -111,6 +111,17 @@ public class PointSETTest {
         assertThat(pointSet.nearest(point(4,4))).isEqualTo(expectedPoint);
     }
 
+    @Test
+    public void draw() {
+        pointSet.insert(point(0,1));
+        pointSet.insert(point(100,1000));
+        pointSet.insert(point(600,600));
+        pointSet.insert(point(700,5001));
+        pointSet.insert(point(1000,10000));
+
+        pointSet.draw();
+    }
+
     private static Point2D point(int x, int y) {
         return new Point2D(x,y);
     }
